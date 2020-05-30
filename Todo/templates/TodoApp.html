@@ -1,0 +1,40 @@
+{% extends 'Base.html' %}{%  load static %}
+
+{% block title %}
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <title> Todo App </title>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row mt-4">
+        <div class="col s12">
+
+            <h2 style="text-align:center"> Basic Todo List Application </h2>
+            <form action="create_new/" method="post" class="form-inline"> {% csrf_token %}
+                    <input type="text" name="content" class="form-control mb-2 mr-sm-2" placeholder="Type Here">
+                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s2">
+
+            <ul class="list-group">
+                {% for item in data %}
+                <li class="list-group-item">{{ item.content }}
+                    <div class="float-right">
+                        <form action="delete_todo/{{ item.id }}/" method="post"> {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger ">Delete</button>
+                        </form>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+
+
+{% endblock %}
